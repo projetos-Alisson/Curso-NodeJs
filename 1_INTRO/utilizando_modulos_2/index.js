@@ -1,5 +1,6 @@
 const fs = require('fs') //file system
 
+
 fs.readFile('arquivo.txt', 'utf8', (err, data) =>{
 
     if(err){
@@ -8,4 +9,14 @@ fs.readFile('arquivo.txt', 'utf8', (err, data) =>{
     }
 
     console.log(data)
+})
+
+
+//Rename File
+fs.rename('./arquiv.txt', './novo_arquivo.txt', (error) =>{
+    if(error){
+        console.log(error)
+    }
+
+    console.log("Renomeação feita")
 })
