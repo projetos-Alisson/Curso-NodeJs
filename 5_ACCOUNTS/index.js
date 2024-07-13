@@ -43,7 +43,9 @@ function operation() {
           "Consultar Saldo",
           "Depositar",
           "Sacar",
-          "Sair",
+          "Sair \n",
+
+          "Excluir conta",
         ],
       },
     ])
@@ -60,17 +62,21 @@ function operation() {
           break;
 
         case "Consultar Saldo":
-          createAccount();
+          getAccountBalance();
           break;
 
         case "Sacar":
-          createAccount();
+          withdraw();
           break;
 
         case "Sair":
           console.log(
             chalk.bgBlue.black("Obrigado por utilizar nossos serviços!")
           );
+          break;
+
+        case "Excluir conta":
+          deleteAccount();
           break;
       }
     })
@@ -216,7 +222,6 @@ function deposit() {
           //add an amount
 
           addAmount(accountName, amount);
-          
         })
         .catch((err) => console.log(err));
     })
@@ -269,4 +274,160 @@ function addAmount(accountName, amount) {
     chalk.green(`Foi depositado o valor de R$${amount} na sua conta!`)
   );
   operation();
+}
+
+//show account balance
+
+//show account balance
+
+function getAccountBalance() {
+  inquirer
+    .prompt([
+      {
+        name: "accountName",
+        message: "Qual o nome da sua conta?",
+      },
+    ])
+    .then((answer) => {
+      const accountName = answer["accountName"];
+
+      //verify if account exists
+
+      if (!checkAccount(accountName)) {
+        return getAccountBalance();
+      }
+
+      const accountData = getAccount(accountName);
+
+      console.log(chalk.bgBlue.black(`Saldo: R$:${accountData.balance}`));
+      operation();
+    })
+    .catch((err) => console.log(err));
+}
+
+//withdraw an amount from user a account
+
+function withdraw() {
+  inquirer
+    .prompt([
+      {
+        name: "accountName",
+        message: "Qual o nome da sua conta?",
+      },
+    ])
+    .then((answer) => {
+      const accountName = answer["accountName"];
+
+      if (!checkAccount(accountName)) {
+        return withdraw();
+      }
+
+      inquirer
+        .prompt([
+          {
+            name: "amount",
+            message: "Quanto você deseja sacar?",
+          },
+        ])
+        .then((answer) => {
+          const amount = answer["amount"];
+
+          removeAmount(accountName, amount);
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+}
+
+function removeAmount(accountName, amount) {
+  const accountData = getAccount(accountName);
+
+  if (!amount) {
+    console.log(
+      chalk.bgRed.black("Ocorreu um erro, tente novamente mais tarde!")
+    );
+    return withdraw();
+  }
+
+  if (accountData.balance < amount) {
+    console.log(chalk.bgRed.black("Valor indisponível!"));
+    return withdraw();
+  }
+
+  accountData.balance = parseFloat(accountData.balance) - parseFloat(amount);
+
+  fs.writeFileSync(
+    `accounts/${accountName}.json`,
+    JSON.stringify(accountData),
+    function (err) {
+      console.log(err);
+    }
+  );
+
+  console.log(
+    chalk.green(`Saque realizado no valor de R$${amount} da sua conta`)
+  );
+  operation();
+}
+
+
+//verify if the user want delete account
+function deleteAccount(accountName) {
+  inquirer
+    .prompt([
+      {
+        type: "confirm",
+        name: "deleteAccount",
+        message: chalk.bgRed.black(`Tem certeza que deseja fazer isso?`),
+      },
+    ])
+    .then((answer) => {
+      const response = answer["deleteAccount"];
+
+      if (response != true) {
+        chalk.green(`Exclusão cancelada`);
+        return operation();
+      } 
+
+      return excludeData();
+    })
+    .catch((err) => console.log(err));
+}
+
+//delete account of the user
+
+function excludeData() {
+
+  inquirer
+  .prompt([
+    {
+      name: "accountName",
+      message: "Qual o nome da sua conta?",
+    },
+  ])
+  .then(
+    ((answer) => {
+      const accountName = answer["accountName"];
+
+      fs.unlink(`accounts/${accountName}.json`, (err) => {
+        if (err) {
+          return console.log(err);
+        }
+    
+        console.log("Sua conta foi excluída");
+    
+        // farewell message 
+        setTimeout(function () {
+          console.log(
+            chalk.blueBright(
+              `Sentimos muito se não pudermos atender as suas necessidades... 😞 `
+            )
+          );
+        }, 3000);
+      });
+      
+    })
+  ).catch((err) => console.log(err))
+
+ 
 }
