@@ -1,0 +1,22 @@
+{
+  "name": "5_modulos_externos",
+  "version": "1.0.0",
+  "description": "Curso de node Matheus Battisti",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/projetos-Alisson/Node.git#main"
+  },
+  "author": "Alisson Soares",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/projetos-Alisson/Node/issues"
+  },
+  "homepage": "https://github.com/projetos-Alisson/Node/tree/main#readme",
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
+}
