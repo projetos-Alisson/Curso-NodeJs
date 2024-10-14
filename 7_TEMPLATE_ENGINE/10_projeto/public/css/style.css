@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navigation{
+    background-color: rgb(24, 151, 124);
+    color: #ffff;
+  
+}
+
+footer{
+    background-color: aqua;
+    color: #ffff;
+    width: 100%;
+    text-align: center;
+}
