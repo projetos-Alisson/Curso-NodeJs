@@ -4,6 +4,8 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+
 .navigation{
     background-color: rgb(24, 151, 124);
     color: #ffff;
@@ -16,3 +18,36 @@ footer{
     width: 100%;
     text-align: center;
 }
+
+h1{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.catalogo{
+    margin-top: 50px ;
+}
+
+.container-items{
+    text-align: center;
+   
+}
+
+.item{
+    border-radius: 10px;
+    border: solid black;
+    width: 300px;
+    margin: 30px auto;
+}
+
+.item img{
+    width: 80%;
+  
+}
+
+.product-name{
+    margin: 30px;
+}
+
+
+

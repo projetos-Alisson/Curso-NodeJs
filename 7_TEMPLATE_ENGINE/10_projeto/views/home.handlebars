@@ -1,2 +1,22 @@
 <h1>Bem vindo a {{lojaNome}}, o paraíso dos jogos!</h1>
 
+<!--Produtos exibidos na Home -->
+
+<h1 class="catalogo">Nosso Catálogo</h1>
+
+<!--Produtos -->
+<div class="container-items"> 
+    {{#each products}}
+
+    <div class="item"> 
+        {{> item}}
+       
+        <p class="preco">{{this.preco}} </p>
+        <img src="{{this.image}}" alt="">
+         <p class="btn"><a href="/produto/{{this.id}}">Comprar</a></p>
+     </div>
+
+    {{/each}}
+
+</div>
+

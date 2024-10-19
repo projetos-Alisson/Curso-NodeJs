@@ -9,7 +9,7 @@ const hbs = exphbs.create({
   partialsDir: ["views/partials"],
 });
 
-//Handlebars configuration 
+//Handlebars configuration with partials
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set('views', './views');
@@ -17,50 +17,62 @@ app.set('views', './views');
 //Configuration css folder
 app.use(express.static('public'))
 
-//Routes of the shop
 
+
+
+const products = [
+    
+  {
+    id: 1,
+  nome: "Super Mario Odyssey",
+  preco: "R$300,00",
+  image: "img/mario.jpg",
+
+  
+},
+
+  {
+    id: 2,
+    nome: "Katana Zero",
+    preco: "R$20,00",
+   image: "img/katana-zero.jpg",
+
+},
+
+  {
+    id: 3,
+    nome: "Hades",
+    preco: "R$45,00",
+    image: "img/hades.jpg",
+
+},
+
+  {
+    id: 4,
+    nome: "Batman Arkham Knight",
+    preco: "R$30,00",
+    image: "img/batman.jpg",
+
+},
+
+]
+
+
+//Routes of the shop
 app.get('/', (req, res) =>{
 
    const lojaNome = "Casa do Game"
 
-    res.render('home', {lojaNome})
+    res.render('home', {lojaNome, products})
+})
+
+app.get("/produto/:id", (req, res) => {
+  const product = products[parseInt(req.params.id) -1]
+ 
+  res.render('produto', {product})
+
 })
 
 
-app.get('/produtos', (req, res) =>{
 
-  products = [
-    
-    {
-    nome: "Super Mario Odyssey",
-    preço: "R$300,00",
-    
-  },
-  
-    {
-    nome: "Katana Zero",
-    preço: "R$20,00",
-    
-  },
-  
-    {
-    nome: "Hades",
-    preço: "R$45,00",
-    
-  },
-  
-    {
-    nome: "Batman Arkham Knight",
-    preço: "R$30,00",
-    
-  },
-
-  
-
-
-]
-  res.render('produtos', {products})
-})
-
-
-app.listen( port)
+app.listen(port)
