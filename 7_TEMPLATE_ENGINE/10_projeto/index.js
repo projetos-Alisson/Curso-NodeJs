@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express()
+const path = require('path');
 const port = 3000
 
 //Declaration modules relative to handlebars
@@ -15,7 +16,7 @@ app.set("view engine", "handlebars");
 app.set('views', './views');
 
 //Configuration css folder
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname,'public')));
 
 
 
@@ -26,7 +27,7 @@ const products = [
     id: 1,
   nome: "Super Mario Odyssey",
   preco: "R$300,00",
-  image: "img/mario.jpg",
+  image: "/img/mario.jpg",
 
   
 },
@@ -35,7 +36,7 @@ const products = [
     id: 2,
     nome: "Katana Zero",
     preco: "R$20,00",
-   image: "img/katana-zero.jpg",
+   image: "/img/katana-zero.jpg",
 
 },
 
@@ -43,7 +44,7 @@ const products = [
     id: 3,
     nome: "Hades",
     preco: "R$45,00",
-    image: "img/hades.jpg",
+    image: "/img/hades.jpg",
 
 },
 
@@ -51,7 +52,7 @@ const products = [
     id: 4,
     nome: "Batman Arkham Knight",
     preco: "R$30,00",
-    image: "img/batman.jpg",
+    image: "/img/batman.jpg",
 
 },
 

@@ -38,6 +38,7 @@ h1{
     border: solid black;
     width: 300px;
     margin: 30px auto;
+    text-align: center;
 }
 
 .item img{
