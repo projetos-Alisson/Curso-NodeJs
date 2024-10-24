@@ -17,7 +17,7 @@ const conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'cursonode',
+  database: 'nodemysql',
 })
 
 conn.connect(function (err) {
