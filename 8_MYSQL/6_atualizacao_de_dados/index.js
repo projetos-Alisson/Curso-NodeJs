@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
   res.render('home')
 })
 
+//INSERT ROUTE - Add books the table
 app.post('/books/insertbook', (req, res) =>{
   const title = req.body.title;
   const pageqty = req.body.pageqty;
@@ -39,6 +40,7 @@ app.post('/books/insertbook', (req, res) =>{
 
 })
 
+//SELECT ROUTE - Select all books
 app.get('/books', (req, res) =>{
   const sql = `SELECT * FROM books`;
 
@@ -56,6 +58,62 @@ app.get('/books', (req, res) =>{
     })
 })
 
+//WHERE ROUTE - Filter book
+
+app.get('/books/:id', (req,res) =>{
+
+    const id = req.params.id
+    const sql = `SELECT * FROM books WHERE id = ${id}`
+
+    conn.query(sql, function(err, data){
+
+      if(err){
+        console.log(err)
+      }
+
+      const book = data[0] //data retorna um array; é nedessário colcoar o índice do 1° livro
+      console.log(data)
+
+      res.render('book', {book})
+    })
+})
+
+
+
+//EDIT BOOK
+app.get('/books/edit/:id', (req,res) =>{
+  const id = req.params.id;
+  const sql = `SELECT * FROM books WHERE id = ${id}`
+
+  
+  conn.query(sql, function(err, data){
+
+    if(err) console.log(err);
+
+    const book = data[0];
+
+    res.render('editbook', {book})
+
+  })
+})
+
+//UPDATE BOOK
+
+app.post('/books/updatebook', (req,res) =>{
+    const id = req.body.id;
+    const title = req.body.title;
+    const pageqty = req.body.pageqty;
+  
+    const sql = `UPDATE books SET  title = '${title}', pageqty = '${pageqty}' WHERE id = ${id} `
+  
+    conn.query(sql, function (err){
+      if(err){
+        console.log(err)
+      }
+      res.redirect('/books')
+    })
+    
+})
 
 const conn = mysql.createConnection({
   host: 'localhost',
